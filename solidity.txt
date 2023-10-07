@@ -205,6 +205,31 @@ contract ArrayPractise{
 
 }
 
+6.TaskMaker
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.18;
+contract TaskMaker{
+    string[] public Tasks;
+    function addTask(string memory TaskName) public{
+        Tasks.push(TaskName);
+    }
+    function removeTask(uint256 index) public{
+        require(index < Tasks.length,"index out of bounds");
+        Tasks[index] = Tasks[Tasks.length - 1];
+        Tasks.pop();
+    }
+    function getNoOfTasks() public view returns(uint256){
+        return Tasks.length;
+
+    }
+    function getTask(uint256 index) public view returns(string memory){
+        require(index < Tasks.length, "Index out of bounds");
+        return Tasks[index];
+
+    }
+}
+
+7.
 
 
 
