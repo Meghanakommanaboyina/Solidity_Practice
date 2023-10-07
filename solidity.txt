@@ -1,4 +1,4 @@
-day01
+#day01
 
 1.HelloMeghana>>
 
@@ -27,3 +27,145 @@ contract SimpleStorage {
         return num;
     }
 }
+_____________________________________________________________________________________________________________________________________________________________
+#DAY 03
+datatypes
+variables
+constants
+immutable
+if/else
+for & while loops
+__________________________________________________________________________________________________________________________________________________________
+#day 04 => Mapping
+1.SimpleMapping->manage and track balances for ethereum addresses
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.18;
+contract SimpleMapping{
+    mapping(address => uint) public balances;
+    function setBalances(uint amount) public{
+        balances[msg.sender] = amount;
+    
+    }
+    function getBalances(address account) public view returns(uint){
+        return balances[account];
+    }
+}
+
+2.StudentGrades
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.18;
+contract StudentGrades{
+    mapping(address => uint) public grades;
+    function setGrades(address student, uint8 grade) public{
+        require(msg.sender == owner, "only owner can add grades");
+        grades[student] = grade;
+    }
+    function getGrades(address student) public view returns(uint8){
+        grades[student];
+    }
+    address public owner;
+    constructor( ) {
+        owner = msg.sender;
+    }
+
+
+}
+
+3.ProductInventory
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.18;
+contract ProductInventory{
+    mapping(string => uint256) public Product;
+    address public owner;
+    constructor(){
+        owner = msg.sender;
+    }
+    function addProduct(string memory productName, uint256 quantity) public{
+        require(msg.sender == owner, "only owner can addd products");
+        Product[productName] = quantity;
+
+
+    }
+    function updateProductQuantity(string memory productName, uint256 newQuantity) public{
+        require(msg.sender == owner, "only owner can addd products");
+        Product[productName] = newQuantity;
+    }
+    function getProductQuantity(string memory productName) public view returns(uint256){
+        return(Product[productName]);
+    }
+
+    
+}
+
+//updated Code
+
+/*pragma solidity ^0.8.18;
+
+contract ProductInventory {
+    mapping(string => uint256) public products;
+    address public owner;
+
+    constructor() {
+        owner = msg.sender;
+    }
+
+    modifier onlyOwner() {
+        require(msg.sender == owner, "Only the owner can perform this action");
+        _;
+    }
+
+    function addProduct(string memory productName, uint256 quantity) public onlyOwner {
+        products[productName] = quantity;
+    }
+
+    function updateProductQuantity(string memory productName, uint256 newQuantity) public onlyOwner {
+        products[productName] = newQuantity;
+    }
+
+    function getProductQuantity(string memory productName) public view returns (uint256) {
+        return products[productName];
+    }
+}*/
+
+
+4.VotingSystem
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.18;
+contract VotingSystem{
+    mapping(string => uint256) public candidateVotes;
+    mapping(address => bool) public eligibleVoters;
+    address public owner;
+    constructor(){
+        owner = msg.sender;
+    }
+    modifier onlyOwner(){
+        require(msg.sender ==  owner,"only owner can add candidates");
+        _;
+    }
+    function addCandidate(string memory candidateName) public onlyOwner{
+        require(candidateVotes[candidateName] == 0, "candidate already exists");
+        candidateVotes[candidateName] = 0;
+    }
+    function voteForCandidate(string memory candidateName) public{
+        require(eligibleVoters[msg.sender],"you are not eligible for voting");
+        require(candidateVotes[candidateName] >= 0, "candidate does not exist");
+        candidateVotes[candidateName]++;
+    }
+    function getCandidateVotes(string memory candidateName) public view returns(uint256){
+        require(candidateVotes[candidateName] >= 0, "Candidate does not exist");
+        return candidateVotes[candidateName];
+    }
+    function addEligibleVoter(address voter) public onlyOwner {
+        eligibleVoters[voter] = true;
+    }
+
+    
+    function removeEligibleVoter(address voter) public onlyOwner {
+        eligibleVoters[voter] = false;
+    }
+
+
+
+}
+
+
