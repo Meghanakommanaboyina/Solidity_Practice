@@ -168,4 +168,43 @@ contract VotingSystem{
 
 }
 
+***Arrays
+5.ArrayPractice
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.18;
+contract ArrayPractise{
+    uint256[5] public Elements;
+    function intializeArray() public{
+        Elements = [10,2,5,7,3];
+    }
+    function Totalsum() public view returns(uint256){
+        uint256 sum = 0;
+        for(uint i = 0;i<Elements.length;i++){
+            sum = sum + Elements[i];
+        }
+        return sum;
+    }
+    function maxEle() public view returns(uint256){
+        uint256 max = 0;
+        for(uint i = 0;i<Elements.length;i++){
+            if(Elements[i] > max){
+                max = Elements[i];
+            }
+        }
+        return max;
+    }
+    function reverseArray() public {
+        uint256 length = Elements.length;
+        for (uint256 i = 0; i < length / 2; i++) {
+            uint256 temp = Elements[i];
+            Elements[i] = Elements[length - 1 - i];
+            Elements[length - 1 - i] = temp;
+        }
+    }
+    
+
+}
+
+
+
 
