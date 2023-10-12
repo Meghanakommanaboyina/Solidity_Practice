@@ -228,8 +228,49 @@ contract TaskMaker{
 
     }
 }
+___________________________________________________________________________________
+#DAY 08
 
-7.
+*EVENTS
+Declaration: To declare an event, use the event keyword. Events can have parameters, which are values you want to log when the event is emitted. Parameters are enclosed in parentheses.
+event MyEvent(uint256 indexedValue, address indexedAddress, string stringValue);
 
+Emission: To emit an event, use the emit keyword followed by the event name and arguments.
+emit MyEvent(42, msg.sender, "Hello, World!");
+
+1. SimpleWallet - basic wallet contract where users can deposit and withdraw Ether.
+
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+contract SimpleWallet{
+    address public owner;
+    event Deposit(address indexed depositor,uint256 amount);
+    event Withdrawal(address indexed recipient,uint256 amount);
+
+    constructor(){
+        owner = msg.sender;
+    }
+    modifier onlyOwner(){
+        require(msg.sender == owner,"only owner can call this action!");
+        _;
+
+    }
+    function deposit() public payable {
+        emit Deposit(msg.sender,msg.value);
+
+    }
+    function withdrawal(address payable recipient, uint256 amount) public onlyOwner{
+        require(address(this).balance >= amount,"Insufficient Balance!");
+        recipient.transfer(amount);
+        emit Withdrawal(recipient,amount);
+
+    }
+    function getBalance() public view returns(uint256){
+        return address(this).balance;
+    }
+}
+
+
+2. 
 
 
